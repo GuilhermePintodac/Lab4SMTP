@@ -1,0 +1,14 @@
+Subject: Test1
+
+Body du premier message Test.
+
+--
+Subject: Test2
+
+Body du 2ème message test.
+
+--
+Subject: Sporting💚🦁
+
+Hello,
+Sporting Clube de Portugal is playing today!

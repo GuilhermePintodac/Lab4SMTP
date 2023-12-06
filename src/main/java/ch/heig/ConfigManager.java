@@ -9,15 +9,18 @@ public class ConfigManager {
     private final int nbGroup;
 
 
-    public ConfigManager(int nbGroup){
+    public ConfigManager(int nbGroup) {
         this.nbGroup = nbGroup;
     }
 
     /**
-     * Read the content of a file with a given encoding.
-     * @param file the file to read.
-     * @param encoding
-     * @return the content of the file as a String, or null if an error occurred.
+     * @param file     Le fichier à lire.
+     * @param encoding L'encodage du fichier.
+     * @return Une liste d'objets Message ou null en cas d'erreur.
+     * @brief Charge les messages à partir d'un fichier.
+     * <p>
+     * Lit le contenu d'un fichier avec un encodage donné, extrait les messages
+     * et les retourne sous forme d'une liste d'objets Message.
      */
     public List<Message> chargerMessages(File file, Charset encoding) {
         List<Message> messageList = new ArrayList<>();
@@ -28,17 +31,17 @@ public class ConfigManager {
 
             while ((line = reader.readLine()) != null) {
 
-                if (line.startsWith("Subject:")){
+                if (line.startsWith("Subject:")) {
                     sujet = line.substring(9);
                 } else if (line.equals("--")) {
                     messageList.add(new Message(sujet, resultString.toString()));
                     resultString = new StringBuilder();
-                }else {
+                } else {
                     resultString.append(line).append("\n");
                 }
             }
 
-            if (!sujet.isEmpty() && !resultString.isEmpty()){
+            if (!sujet.isEmpty() && !resultString.isEmpty()) {
                 messageList.add(new Message(sujet, resultString.toString()));
             }
 
@@ -51,10 +54,13 @@ public class ConfigManager {
     }
 
     /**
-     * Read the content of a file with a given encoding.
-     * @param file the file to read.
-     * @param encoding
-     * @return the content of the file as a String, or null if an error occurred.
+     * @param file     Le fichier à lire.
+     * @param encoding L'encodage du fichier.
+     * @return Une liste d'objets GroupEmail ou null en cas d'erreur.
+     * @brief Charge les adresses e-mail des victimes à partir d'un fichier.
+     * <p>
+     * Lit le contenu d'un fichier avec un encodage donné, mélange les adresses e-mail
+     * et crée des groupes d'e-mails avec un expéditeur et un nombre aléatoire de destinataires.
      */
     public List<GroupEmail> chargerVictimes(File file, Charset encoding) {
         List<GroupEmail> groupesEmail = new ArrayList<>();
@@ -67,10 +73,10 @@ public class ConfigManager {
                 adressesMail.add(line);
             }
 
-            try{
+            try {
                 int totalVictimes = adressesMail.size() < 6 ? adressesMail.size() - 2 : 3;
                 Random rand = new Random();
-                for (int i = 0; i < nbGroup; i++){
+                for (int i = 0; i < nbGroup; i++) {
                     Collections.shuffle(adressesMail);
                     List<String> tmp = new ArrayList<>(adressesMail);
                     String expediteur = tmp.get(0);
@@ -79,7 +85,7 @@ public class ConfigManager {
                     groupesEmail.add(new GroupEmail(expediteur, tmp.subList(0, nbDestinataires)));
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
 

@@ -19,12 +19,12 @@ public class Main {
         ArrayList<Message> messageList = new ArrayList<>(configManager.chargerMessages(new File(messages), StandardCharsets.UTF_8));
         ArrayList<GroupEmail> groupEmails = new ArrayList<>(configManager.chargerVictimes(new File(victimes), StandardCharsets.UTF_8));
         ArrayList<Email> emails = new ArrayList<>();
-        for (int i = 0; i < nbGroup; i++){
+        for (int i = 0; i < nbGroup; i++) {
             emails.add(new Email(groupEmails.get(i), messageList.get(i % messageList.size())));
         }
 
         ClientSMTP clientSMTP = new ClientSMTP(adresseServer, portSMTP);
-        for (Email email:emails) {
+        for (Email email : emails) {
             clientSMTP.envoyerEmail(email);
         }
 

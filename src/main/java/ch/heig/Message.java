@@ -5,16 +5,16 @@ public class Message {
     private final String corps;
 
 
-    Message(String sujet, String corps){
+    Message(String sujet, String corps) {
         this.sujet = sujet;
         this.corps = corps;
     }
 
-    public String getSujet(){
+    public String getSujet() {
         return sujet;
     }
 
-    public String getCorps(){
+    public String getCorps() {
         return corps;
     }
 }

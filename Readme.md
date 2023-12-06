@@ -7,22 +7,22 @@
 1. [Introduction](#1-introduction)
 2. [Description](#2-description)
 3. [Configuration du serveur SMTP](#3-configuration-du-serveur-smtp)
-4. [Configuration et exécution du client SMTP](#5-configuration-et-exécution-du-client-smtp)
-   1. [Configuration messagesList.txt](#51-configuration-messageslisttxt)
-   2. [Configuration victimsList.txt](#52-configuration-victimslisttxt)
-   3. [Configuration Main.java](#53-configuration-mainjava)
-5. [Implémentation](#6-implémentation)
-   1. [Main.java](#61-mainjava)
-   2. [ClientSMTP.java](#62-clientsmtpjava)
-   3. [Message.java](#63-messagejava)
-   4. [Email.java](#64-emailjava)
-   5. [ConfigManager.java](#65-configmanagerjava)
-   6. [GroupEmail.java](#66-groupemailjava)
-6. [Conclusion](#7-conclusion)
-7. [Références](#8-références)
+4. [Configuration et exécution du client SMTP](#4-configuration-et-exécution-du-client-smtp)
+   1. [Configuration `messagesList.txt`](#41-configuration-messageslisttxt)
+   2. [Configuration `victimsList.txt`](#42-configuration-victimslisttxt)
+   3. [Configuration `Main.java`](#43-configuration-mainjava)
+5. [Implémentation](#5-implémentation)
+   1. [Main.java](#51-mainjava)
+   2. [ClientSMTP.java](#52-clientsmtpjava)
+   3. [Message.java](#53-messagejava)
+   4. [Email.java](#54-emailjava)
+   5. [ConfigManager.java](#55-configmanagerjava)
+   6. [GroupEmail.java](#56-groupemailjava)
+6. [Exemple de communication](#6-exemple-de-communication)
+7. [Conclusion](#7-conclusion)
+8. [Références](#8-références)
    - [SMTP RFC](https://datatracker.ietf.org/doc/html/rfc5321)
    - [MailDev - Serveur SMTP de test](https://github.com/maildev/maildev)
-   - [Guide de démarrage rapide](#configuration-et-exécution-du-client-smtp)
 
 ## 1. Introduction
 
@@ -85,7 +85,7 @@ La variable nbGroup détermine le nombre de groupes formés. Pour chaque groupe 
 
 ## 6. Implémentation
 
-![UML](C:\Users\guisp\IntelliJ\Lab4SMTP\UML.png "UML").
+![UML](UML.png "UML").
 
 ### 6.1 Main.java
 
@@ -117,16 +117,42 @@ messages. Elle assure également la validation des données.
 La classe `GroupEmail.java` représente un groupe d'emails avec un expéditeur et plusieurs destinataires. Elle utilise 
 une expression régulière pour valider les adresses email.
 
-## 7. Conclusion
+## 7. Exemple de communication
+
+```
+C: Connexion au serveur (socket)
+S: Accepte la connexion client
+C: EHLO <adresse serveur>
+S: 250-PIPELINING
+S: 250-8BITMIME
+S: 250 SMTPUTF8
+C: MAIL FROM: <adresse expéditeur>
+S: 250 OK
+// Les deux lignes suivantes seront répétées autant de fois qu'il y a de destinataire. 
+C: RCPT TO: <adresse d'un destinataire>          
+S: 250 OK  
+...                                      
+C: DATA
+S: 250 OK
+S: 354 End data with <CR><LF>.<CR><LF>
+C: Sujet encodé en UTF-8
+C: Ligne vide + corps du mail
+C: '.' + ligne vide
+S: 250 OK
+C: QUIT
+S: 250 OK
+S: 221 <adresse serveur> closing connection
+```
+
+## 8. Conclusion
 
 Ce client SMTP offre une solution robuste pour l'envoi automatisé d'emails en respectant les exigences du laboratoire.
 L'utilisation du serveur SMTP de test facilite les essais sans envoyer de vrais emails. L'implémentation respecte les 
 principes de la programmation orientée objet et maintient la séparation des préoccupations.
 
-## 8. Références
+## 9. Références
 
 - [SMTP RFC](https://datatracker.ietf.org/doc/html/rfc5321)
 - [MailDev - Serveur SMTP de test](https://github.com/maildev/maildev)
 
-N'oubliez pas de consulter le [guide de démarrage rapide](#configuration-et-exécution-du-client-smtp) pour une utilisation facile du client SMTP.
 

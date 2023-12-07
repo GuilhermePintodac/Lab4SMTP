@@ -50,7 +50,7 @@ Cela fournira une interface web sur `localhost:1080` et un serveur SMTP sur `loc
 Si vous n'avez jamais utilisé le serveur SMTP de maildev vous pouvez tout d'abords lancer la commande suivante:
 
 ```bash
-docker run -d -p 1080:1080 -p 1025:1025 maildev/maildev
+docker pull maildev/maildev
 ```
 
 Pour plus de détails ou cas de problème avec maildev veuillez vous référez au lien suivant 
